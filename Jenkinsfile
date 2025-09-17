@@ -32,19 +32,16 @@ pipeline {
 
         stage("Security Scan") {
             steps {
-                echo "Running Trivy security scan..."
-                sh """
-                    docker run --rm -v $(pwd):/app aquasec/trivy fs /app || echo 'Trivy found issues'
-                """
+                echo "Skipping Trivy scan because Docker is not used."
             }
         }
 
         stage("Deploy") {
             steps {
-                echo "Deploying app..."
-                sh "docker build -t node-api ."
-                sh "docker run -d -p 3000:3000 node-api"
+                echo "Starting app locally (no Docker)..."
+                sh "npm start &"
             }
         }
     }
 }
+
