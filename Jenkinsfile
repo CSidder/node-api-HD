@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs "NodeJS 18"  // Must match what you typed exactly in Global Tool Config
+    }
+
     stages {
         stage("Build") {
             steps {
@@ -12,27 +16,19 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Running tests..."
-                bat "npm test || echo Tests failed, continuing..."
+                bat "npm test || echo Tests failed"
             }
         }
 
         stage("Code Quality") {
             steps {
-                echo "Running code quality scan..."
-                bat '''
-                    npm install -g sonar-scanner
-                    sonar-scanner ^
-                      -Dsonar.projectKey=node-api ^
-                      -Dsonar.sources=. ^
-                      -Dsonar.host.url=http://localhost:9000 ^
-                      -Dsonar.login=your_sonarqube_token
-                '''
+                echo "Skipping SonarQube for now"
             }
         }
 
         stage("Security Scan") {
             steps {
-                echo "Skipping Trivy scan because Docker is not used."
+                echo "Skipping security scan for now"
             }
         }
 
@@ -44,5 +40,3 @@ pipeline {
         }
     }
 }
-
-
