@@ -128,5 +128,10 @@ app.use('/api', router);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
-console.log('Magic happens on port ' + port);
+// here is the changed code
+if (require.main === module) {
+  app.listen(port, () => console.log("Magic happens on port " + port));
+}
+
+module.exports = app;
+
