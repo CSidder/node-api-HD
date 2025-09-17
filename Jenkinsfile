@@ -10,6 +10,7 @@ pipeline {
             steps {
                 echo "Installing dependencies..."
                 bat "npm install"
+                
             }
         }
 
@@ -17,6 +18,8 @@ pipeline {
             steps {
                 echo "Running tests..."
                 bat "npm test || echo Tests failed"
+                echo "Installing Jest..."
+                bat "npm install --save-dev jest"
             }
         }
 
