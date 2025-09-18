@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS 18"  // Must match what you typed exactly in Global Tool Config
+        nodejs "NodeJS 18"
     }
 
     stages {
@@ -10,7 +10,6 @@ pipeline {
             steps {
                 echo "Installing dependencies..."
                 bat "npm install"
-                
             }
         }
 
@@ -23,9 +22,18 @@ pipeline {
             }
         }
 
-        stage("Code Quality") {
+        stage("SonarCloud Analysis") {
             steps {
-                echo "Skipping SonarQube for now"
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                    bat '''
+                        echo 🔍 Starting SonarCloud Scan...
+
+                        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006.zip
+                        powershell -Command "Expand-Archive sonar-scanner.zip -Force"
+                        set PATH=%PATH%;%cd%\\sonar-scanner-5.0.1.3006\\bin
+                        sonar-scanner
+                    '''
+                }
             }
         }
 
