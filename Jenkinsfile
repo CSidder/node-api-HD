@@ -25,7 +25,7 @@ pipeline {
         stage('Code Quality Check') {
             steps {
                 withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    bat 'C:\\Users\\saada\\Downloads\\sonar-scanner-7.2.0.5079-windows-x64\\bin\\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%'
+                    bat 'C:\\SonarScanner\\bin\\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%'
                 }
             }
         }
