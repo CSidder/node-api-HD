@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS 18"
+        nodejs "NodeJS 18"  // Match what you set in Jenkins global tools
     }
 
     stages {
@@ -30,7 +30,8 @@ pipeline {
 
                         curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006.zip
                         powershell -Command "Expand-Archive sonar-scanner.zip -Force"
-                        sonar-scanner-5.0.1.3006\\bin\\sonar-scanner.bat
+                        set PATH=%PATH%;%cd%\\sonar-scanner\\bin
+                        sonar-scanner\\bin\\sonar-scanner.bat
                     '''
                 }
             }
