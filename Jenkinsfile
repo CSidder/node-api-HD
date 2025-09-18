@@ -23,19 +23,19 @@ pipeline {
         }
 
         stage("SonarCloud Analysis") {
-            steps {
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    bat '''
-                        echo 🔍 Starting SonarCloud Scan...
+    steps {
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+            bat '''
+                echo 🔍 Starting SonarCloud Scan...
 
-                        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006.zip
-                        powershell -Command "Expand-Archive sonar-scanner.zip -Force"
-                        
-                        sonar-scanner-5.0.1.3006\\bin\\sonar-scanner.bat
-                    '''
-                }
-            }
+                curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006.zip
+                powershell -Command "Expand-Archive sonar-scanner.zip -DestinationPath sonar-scanner -Force"
+
+                sonar-scanner\\bin\\sonar-scanner.bat
+            '''
         }
+    }
+}
 
         stage("Security Scan") {
             steps {
