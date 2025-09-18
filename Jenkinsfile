@@ -22,20 +22,15 @@ pipeline {
             }
         }
 
-        stage("SonarCloud Analysis") {
-            steps {
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    bat '''
-                        echo 🔍 Starting SonarCloud Scan...
+        stage('Code Quality Check') {
+  steps {
+    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+      // Replace this with YOUR real Windows path!
+      bat 'C:\\Users\\saada\\Downloads\\sonar-scanner-4.7.0.2747-windows\\bin\\sonar-scanner.bat'
+    }
+  }
+}
 
-                        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006.zip
-                        powershell -Command "Expand-Archive sonar-scanner.zip -Force"
-                        set PATH=%PATH%;%cd%\\sonar-scanner\\bin
-                        sonar-scanner\\bin\\sonar-scanner.bat
-                    '''
-                }
-            }
-        }
 
         stage("Security Scan") {
             steps {
