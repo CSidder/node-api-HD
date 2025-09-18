@@ -23,13 +23,13 @@ pipeline {
         }
 
         stage('Code Quality Check') {
-  steps {
-    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-      // Replace this with YOUR real Windows path!
-      bat 'C:\\Users\\saada\\Downloads\\sonar-scanner-4.7.0.2747-windows\\bin\\sonar-scanner.bat'
+    steps {
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+            bat 'C:\\Users\\saada\\Downloads\\sonar-scanner-7.2.0.5079-windows-x64\\bin\\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%'
+        }
     }
-  }
 }
+
 
 
         stage("Security Scan") {
