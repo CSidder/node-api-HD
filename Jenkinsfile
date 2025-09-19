@@ -30,11 +30,13 @@ pipeline {
             }
         }
 
-        stage("Security Scan") {
-            steps {
-                echo "Skipping security scan for now"
-            }
+            stage("Security Scan") {
+        steps {
+            echo "Running security scan using npm audit..."
+            bat "npm audit --audit-level=low || exit 0"
         }
+    }
+
 
         stage("Deploy") {
             steps {
