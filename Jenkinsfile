@@ -39,10 +39,11 @@ pipeline {
 
 
         stage("Deploy") {
-            steps {
-                echo "Starting app locally..."
-                bat "start npm start"
+    steps {
+        echo "Starting the Node.js app locally..."
+        bat "start cmd /c \"npm start\""
             }
         }
+
     }
 }
